@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - API_URL=http://backend:8080
+
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - MEMORIA_DB_HOST=db
+      - MEMORIA_DB_PORT=5432
+      - MEMORIA_DB_USER=postgres
+      - MEMORIA_DB_PASSWORD=yourpassword
+      - MEMORIA_DB_NAME=memoriadb
+    volumes:
+      - ./temp_config:/app/config
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=yourpassword
+      - POSTGRES_DB=memoriadb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
