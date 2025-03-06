@@ -1,16 +1,22 @@
 version: "3.8"
 services:
   frontend:
-    build: ./frontend
+    container_name: memoria-frontend
+    build:
+      context: ./frontend
+      args:
+        # Build-time environment variables for Vite
+        - VITE_API_URL=${VITE_API_URL:-http://localhost:6662}
     ports:
-      - "3000:3000"
-    environment:
-      - API_URL=http://backend:8080
+      - "6661:3000"
+    # environment:
+    # - VITE_API_URL=http://backend:8080
 
   backend:
+    container_name: memoria-backend
     build: ./backend
     ports:
-      - "8080:8080"
+      - "6662:8080"
     depends_on:
       - db
     environment:
@@ -19,8 +25,9 @@ services:
       - MEMORIA_DB_USER=postgres
       - MEMORIA_DB_PASSWORD=yourpassword
       - MEMORIA_DB_NAME=memoriadb
-    volumes:
-      - ./temp_config:/app/config
+      - MEMORIA_AUTH_ALLOWED_ORIGINS=http://localhost:6661
+    # volumes:
+    # - ./temp_config:/app/config
   db:
     image: postgres:latest
     ports:
