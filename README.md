@@ -13,6 +13,13 @@ losing my copy and paste history between systems.
 - Backend API service written in GoLang
 - Docker containerization for easy deployment
 
+## Screenshots
+
+<div align="center">
+  <img src="docs/application_screenshot.png" alt="Home page" width="80%" />
+  <p><em>Memoria home page with dark theme</em></p>
+</div>
+
 ## 📋 Prerequisites
 
 - Docker and Docker Compose
