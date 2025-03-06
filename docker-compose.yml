@@ -36,7 +36,7 @@ services:
       - MEMORIA_DB_PASSWORD=yourpassword
       - MEMORIA_DB_NAME=memoriadb
       # Allow requests from Nginx
-      - MEMORIA_AUTH_ALLOWED_ORIGINS=http://localhost:80
+      - MEMORIA_AUTH_ALLOWEDORIGINS=https://playground.faiyts.media,http://192.168.0.231,https://paste.faiyts.media
     # volumes:
     # - ./temp_config:/app/config
   db:
