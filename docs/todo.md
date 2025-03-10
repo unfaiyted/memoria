@@ -27,4 +27,5 @@
 - finish short url api call integration
 - Pretty drop down for expires after
 - add settings button working? what kind of settings should I add?
+- add icons based on language that is pasted
 
