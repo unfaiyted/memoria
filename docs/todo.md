@@ -15,10 +15,15 @@
 - FIXED: copy to clipboard on private access page not hiding on code 
 - FIXED: should have some more lines on the code editor. feels weird to use clicking the blank area could also add focus instead? 
 - FIXED: Not loading when going to different pastes now. Just loads one and stays on that one
+- FIXED: clean up console logs, full of bs
+- FIXED: id is being pulled multiple times on past load, per console logs
+- FIXED: sidebar of light mode has a series of issues with styling that needs addressed
 
 - side bar popups scroll down with large pages. need to get them fixed on the sidebar position. 
-- (pasteViewer) improve code block display when paste was in text mode
 - figure out how to get the tooltip for the private paste to not load in like that. maybe 0 opacity initialy or something
+- optimize side bar requests if possible
+- big paste button is off center on smaller screens.
+
 
 
 # Feature Add:
@@ -31,4 +36,7 @@
 - finish short url api call integration
 - Pretty drop down for the actual time of when it expires
 - add settings button working? what kind of settings should I add?
+- about the app page
+- (pasteViewer) improve code block display when paste was in text mode
+- easter egg?
 

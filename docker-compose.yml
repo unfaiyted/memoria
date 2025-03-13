@@ -10,18 +10,40 @@ services:
     depends_on:
       - frontend
       - backend
+      - portus
+    networks:
+      - memoria_network
+
   frontend:
     container_name: memoria-frontend
     build:
       context: ./frontend
-      # args:
+      args:
+       - VITE_SHORTEN_API_BASE_URL=http://go/api/v1
       # Build-time environment variables for Vite
-      # - VITE_API_URL=${VITE_API_URL:-/api}
     ports:
       - "6661:3000"
-    # environment:
-    # - VITE_API_URL=http://backend:8080
-
+    networks:
+      - memoria_network
+  portus:
+    container_name: portus-backend
+    build:
+      context: ../portus
+    ports:
+      - "6663:8080"
+    depends_on:
+      - db
+    environment:
+      - PORTUS_DB_HOST=db
+      - PORTUS_DB_PORT=5432
+      - PORTUS_DB_USER=postgres
+      - PORTUS_DB_PASSWORD=yourpassword
+      - PORTUS_DB_NAME=portusdb
+      - PORTUS_APP_APPURL=http://go
+      # Allow requests from Nginx
+      - PORTUS_AUTH_ALLOWEDORIGINS=http://go,http://localhost:6663,https://paste.faiyts.media,https://prt.ad,http://localhost,http://memoria
+    networks:
+      - memoria_network
   backend:
     container_name: memoria-backend
     build: ./backend
@@ -36,9 +58,11 @@ services:
       - MEMORIA_DB_PASSWORD=yourpassword
       - MEMORIA_DB_NAME=memoriadb
       # Allow requests from Nginx
-      - MEMORIA_AUTH_ALLOWEDORIGINS=https://playground.faiyts.media,http://192.168.0.231,https://paste.faiyts.media
+      - MEMORIA_AUTH_ALLOWEDORIGINS=http://localhost,http://playground.faiyts.media,http://192.168.0.231:6661,https://paste.faiyts.media,http://paste.prt.ad,http://memoria
     # volumes:
     # - ./temp_config:/app/config
+    networks:
+      - memoria_network
   db:
     image: postgres:latest
     ports:
@@ -48,6 +72,12 @@ services:
       - POSTGRES_DB=memoriadb
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - memoria_network
+
+networks:
+  memoria_network:
+    driver: bridge
 
 volumes:
   postgres_data:
